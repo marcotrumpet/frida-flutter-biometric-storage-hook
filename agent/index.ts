@@ -6,14 +6,14 @@ if (ObjC.available) {
 
     log("Injecting...");
 
-    var hook = ObjC.classes["biometric_storage.SwiftBiometricStoragePlugin"]["- handleMethodCall:result:"];
+    const hook = ObjC.classes["biometric_storage.SwiftBiometricStoragePlugin"]["- handleMethodCall:result:"];
 
     Interceptor.attach(hook.implementation, {
         onEnter(args) {
             log(`-[biometric_storage.SwiftBiometricStoragePlugin handleMethodCall:${args[2]} result:${args[3]}]`);
-            var arg2 = new ObjC.Object(args[2]);
+            const arg2 = new ObjC.Object(args[2]);
 
-            var flutterMethodChannelParams = Object.values(arg2.$ivars);
+            const flutterMethodChannelParams = Object.values(arg2.$ivars);
 
             log(flutterMethodChannelParams.toString());
 
@@ -39,7 +39,7 @@ if (ObjC.available) {
             } else if (flutterMethodChannelParams[0] == "FlutterMethodCall" && flutterMethodChannelParams[1] == "write") {
 
                 var dict = flutterMethodChannelParams[2];
-                var enumerator = dict.keyEnumerator();
+                const enumerator = dict.keyEnumerator();
                 var key;
 
                 while ((key = enumerator.nextObject()) !== null) {
